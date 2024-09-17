@@ -21,9 +21,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview
 @Composable
-fun LevelsScreen() {
+fun LevelsScreen(
+    onBack: () -> Unit,
+    onSetting: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,7 +42,7 @@ fun LevelsScreen() {
                 .align(Alignment.TopStart)
                 .padding(16.dp)
                 .clickable {
-
+                    onBack()
                 }
         )
 
@@ -52,7 +54,7 @@ fun LevelsScreen() {
                 .align(Alignment.TopEnd)
                 .padding(16.dp)
                 .clickable {
-
+                    onSetting()
                 }
         )
         Column(
@@ -67,7 +69,6 @@ fun LevelsScreen() {
                     .size(260.dp)
                     .padding(16.dp)
                     .clickable {
-
                     }
             )
             // Уровни 1, 2, 3

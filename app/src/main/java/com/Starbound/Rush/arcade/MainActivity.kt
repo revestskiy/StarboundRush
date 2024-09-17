@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.Starbound.Rush.arcade.ui.theme.StarboundRushTheme
 import kotlinx.coroutines.delay
 
@@ -25,19 +26,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             StarboundRushTheme {
-
+                val navHostController = rememberNavController()
+                NavigationScreen(navHostController = navHostController)
             }
         }
     }
 }
 
-@Preview
+
 @Composable
 fun LoadingScreen(
-
+    onNext: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         delay(2000)
+        onNext()
 
     }
     Box(

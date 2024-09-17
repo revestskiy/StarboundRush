@@ -20,9 +20,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview
 @Composable
-fun MenuScreen() {
+fun MenuScreen(
+    onLevel: () -> Unit,
+    onSetting: () -> Unit,
+    onExit: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -39,7 +42,7 @@ fun MenuScreen() {
                 .align(Alignment.TopEnd)
                 .padding(16.dp)
                 .clickable {
-
+                    onSetting()
                 }
         )
         Column(
@@ -56,7 +59,7 @@ fun MenuScreen() {
                 modifier = Modifier
                     .size(width = 400.dp, height = 100.dp)
                     .clickable {
-
+                        onLevel()
                     }
             )
 
@@ -69,7 +72,7 @@ fun MenuScreen() {
                 modifier = Modifier
                     .size(width = 250.dp, height = 80.dp)
                     .clickable {
-
+                        onExit()
                     }
             )
         }

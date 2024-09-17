@@ -34,35 +34,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.Starbound.Rush.arcade.ui.theme.nujnoefont
 
-@Preview
 @Composable
-fun OptionsScreen() {
-    // Используем Box для позиционирования элементов на фоне
+fun OptionsScreen(
+    onBack: () -> Unit
+) {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .paint(
-                painter = painterResource(id = R.drawable.background), // Заменить на ваш фон
+                painter = painterResource(id = R.drawable.background),
                 contentScale = ContentScale.Crop
             )
     ) {
-        // Кнопка назад в верхнем левом углу
+
         Image(
-            painter = painterResource(id = R.drawable.backbutton), // Заменить на ваш ресурс
+            painter = painterResource(id = R.drawable.backbutton),
             contentDescription = "Back Button",
             modifier = Modifier
                 .size(80.dp)
                 .align(Alignment.TopStart)
                 .padding(16.dp)
                 .clickable {
-                    // Обработка нажатия на кнопку назад
+                    onBack()
                 }
         )
 
-        // Текст "OPTIONS" с кастомным шрифтом по центру
+
         Text(
             text = "OPTIONS",
-            fontFamily = nujnoefont, // Заменить на ваш шрифт
+            fontFamily = nujnoefont,
             fontSize = 32.sp,
             color = Color.White,
             modifier = Modifier
@@ -70,14 +71,14 @@ fun OptionsScreen() {
                 .padding(top = 80.dp)
         )
 
-        // Синяя панель настроек
+
         Box(
             modifier = Modifier
                 .align(Alignment.Center)
                 .size(width = 320.dp, height = 200.dp)
                 .paint(painter = painterResource(id = R.drawable.backgroundsetting), contentScale = ContentScale.Fit)
         ) {
-            // Управление состояниями переключателей
+
             var isMusicEnabled by remember { mutableStateOf(true) }
             var isSoundEnabled by remember { mutableStateOf(true) }
 
@@ -88,27 +89,27 @@ fun OptionsScreen() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Переключатель для музыки
+
                 SettingItem(
                     title = "MUSIC",
                     checked = isMusicEnabled,
-                    onCheckedChange = { isMusicEnabled = it } // Обработка изменения состояния
+                    onCheckedChange = { isMusicEnabled = it }
                 )
 
-                Spacer(modifier = Modifier.height(16.dp)) // Отступ между элементами
+                Spacer(modifier = Modifier.height(16.dp))
 
-                // Переключатель для звуков
+
                 SettingItem(
                     title = "SOUND",
                     checked = isSoundEnabled,
-                    onCheckedChange = { isSoundEnabled = it } // Обработка изменения состояния
+                    onCheckedChange = { isSoundEnabled = it }
                 )
             }
         }
     }
 }
 
-// Вспомогательная функция для переключателей
+
 @Composable
 fun SettingItem(
     title: String,
@@ -123,7 +124,7 @@ fun SettingItem(
         horizontalArrangement = Arrangement.SpaceBetween
 
     ) {
-        // Текст названия опции
+
         Text(
             text = title,
             fontFamily = nujnoefont, // Заменить на ваш шрифт
@@ -131,7 +132,7 @@ fun SettingItem(
             modifier = Modifier.weight(1f)
         )
 
-        // Переключатель
+
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
