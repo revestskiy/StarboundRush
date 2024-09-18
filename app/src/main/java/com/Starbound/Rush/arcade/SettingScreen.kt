@@ -2,7 +2,6 @@ package com.Starbound.Rush.arcade
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -29,9 +27,9 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.Cloud.Cruiser.cloudgame.SoundManager
 import com.Starbound.Rush.arcade.ui.theme.nujnoefont
 
 @Composable
@@ -52,9 +50,9 @@ fun OptionsScreen(
             painter = painterResource(id = R.drawable.backbutton),
             contentDescription = "Back Button",
             modifier = Modifier
-                .size(80.dp)
                 .align(Alignment.TopStart)
                 .padding(16.dp)
+                .size(50.dp)
                 .clickable {
                     onBack()
                 }
@@ -79,13 +77,14 @@ fun OptionsScreen(
                 .paint(painter = painterResource(id = R.drawable.backgroundsetting), contentScale = ContentScale.Fit)
         ) {
 
-            var isMusicEnabled by remember { mutableStateOf(true) }
-            var isSoundEnabled by remember { mutableStateOf(true) }
+            var isMusicEnabled by remember { mutableStateOf(Prefs.musicVolume != 0f) }
+            var isSoundEnabled by remember { mutableStateOf(Prefs.soundVolume != 0f) }
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp),
+                    .padding(16.dp)
+                    .padding(horizontal = 8.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -93,7 +92,11 @@ fun OptionsScreen(
                 SettingItem(
                     title = "MUSIC",
                     checked = isMusicEnabled,
-                    onCheckedChange = { isMusicEnabled = it }
+                    onCheckedChange = {
+                        isMusicEnabled = it
+                        Prefs.musicVolume = if (isMusicEnabled) 0.5f else 0f
+                        SoundManager.setMusicVolume()
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -102,7 +105,10 @@ fun OptionsScreen(
                 SettingItem(
                     title = "SOUND",
                     checked = isSoundEnabled,
-                    onCheckedChange = { isSoundEnabled = it }
+                    onCheckedChange = { isSoundEnabled = it
+                        Prefs.soundVolume = if (isSoundEnabled) 0.5f else 0f
+                        SoundManager.setSoundVolume()
+                    }
                 )
             }
         }
@@ -129,7 +135,8 @@ fun SettingItem(
             text = title,
             fontFamily = nujnoefont, // Заменить на ваш шрифт
             fontSize = 24.sp,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            color = Color(0xFF0A5286)
         )
 
 
